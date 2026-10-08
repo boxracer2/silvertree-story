@@ -1,0 +1,2 @@
+# The built page is published exactly as built: never convert its line endings.
+site/** -text
