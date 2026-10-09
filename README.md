@@ -9,9 +9,16 @@ on every push to `main`.
 - The source lives in `C:\Users\Brian\Projects\emma-hygiene-dashboard-immersive` (`client/public-story`). Don't edit
   the files in `site/` by hand.
 
-## Monthly refresh (after the monthly report is in)
-1. In the immersive folder, run `npm run public-story`. It writes the snapshot, builds the page, and fails if anything
-   private reached the build.
-2. Replace this repo's `site` folder with `dist/public-story`, for example
-   `robocopy ..\emma-hygiene-dashboard-immersive\dist\public-story site /MIR`.
+## Numbers refresh on their own
+- The page loads `/data.json` on every visit.
+- Render rewrites that request to the dashboard's public counts route, `/api/public/story`, which returns counts only
+  and is cached 10 minutes. The rule is set in the Render dashboard under Redirects/Rewrites.
+- A monthly report uploaded to the dashboard shows up here within about 10 minutes. Nothing needs rebuilding.
+- If the dashboard doesn't answer, or its reply doesn't check out, the page shows the numbers it was built with.
+- Never add a real `data.json` file to `site`, because Render skips the rule when a file exists.
+
+## Changing the page's look
+1. Build it with `npm run public-story` in the project that holds the source. The build fails if anything private
+   reached it.
+2. Replace this repo's `site` folder with `dist/public-story`, for example with `robocopy <project>\dist\public-story site /MIR`.
 3. Commit and push. Render publishes it within a minute or two.
